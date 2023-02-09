@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brands;
+use App\Models\Brand;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +15,6 @@ class BrandsTableSeeder extends Seeder
      */
     public function run()
     {
-        Brands::factory()->count(15)->create();
+        Brand::factory()->count(15)->create();
     }
 }

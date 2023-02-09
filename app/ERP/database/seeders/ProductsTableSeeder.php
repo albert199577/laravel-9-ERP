@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Products;
+use App\Models\Brand;
+use App\Models\Product;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -15,6 +16,11 @@ class ProductsTableSeeder extends Seeder
      */
     public function run()
     {
-        Products::factory()->count(50)->create();
+        $brands = Brand::all();
+
+        Product::factory()->count(50)->make()->each(function ($product) use ($brands) {
+            $product->brand_id = $brands->random()->id;
+            $product->save();
+        });
     }
 }
