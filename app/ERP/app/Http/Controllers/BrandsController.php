@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brands;
+use App\Models\Brand;
 use Illuminate\Http\Request;
 
 class BrandsController extends Controller
@@ -14,7 +14,8 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        //
+        $brands = Brand::all();
+        return view('brands.index', ['brands' => $brands]);
     }
 
     /**
@@ -24,7 +25,7 @@ class BrandsController extends Controller
      */
     public function create()
     {
-        //
+        return view('brands.create');
     }
 
     /**
@@ -35,51 +36,70 @@ class BrandsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:brands|max:20',
+        ]);
+        $brand = Brand::create($validated);
+
+        session()->flash('status', '品牌已建立');
+
+        return redirect()->route('brand.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Brands  $brands
+     * @param  \App\Models\Brand  $brands
      * @return \Illuminate\Http\Response
      */
-    public function show(Brands $brands)
+    public function show(Brand $brand)
     {
-        //
+        return view('brands.show', ['brands' => $brand]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Brands  $brands
+     * @param  \App\Models\Brand  $brands
      * @return \Illuminate\Http\Response
      */
-    public function edit(Brands $brands)
+    public function edit(Brand $brand)
     {
-        //
+        return view('brands.edit', ['brand' => $brand]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brands  $brands
+     * @param  \App\Models\Brand  $brands
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brands $brands)
+    public function update(Request $request, Brand $brand)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:20',
+        ]);
+        $brand->fill($validated);
+        $brand->save();
+
+        session()->flash('status', '品牌名稱已更新');
+
+        return redirect()->route('brand.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Brands  $brands
+     * @param  \App\Models\Brand  $brands
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brands $brands)
+    public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        session()->flash('status', '品牌已刪除');
+
+        return redirect()->route('brand.index');
     }
 }
