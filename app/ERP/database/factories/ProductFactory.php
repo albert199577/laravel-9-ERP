@@ -19,6 +19,7 @@ class ProductFactory extends Factory
         return [
             'name' => fake()->word(),
             'content' => fake()->sentence(),
+            'is_default' => fake()->boolean(),
         ];
     }
 }
