@@ -52,9 +52,13 @@ class BrandsController extends Controller
      * @param  \App\Models\Brand  $brands
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show($brand)
     {
-        return view('brands.show', ['brands' => $brand]);
+        $brand = Brand::with(['product.product_model', 'product.type'])->findOrFail($brand);
+        
+        $products = $brand->product;
+        
+        return view('brands.show', ['brands' => $brand, 'products' => $products]);
     }
 
     /**
