@@ -4,9 +4,12 @@
 
 @section('content')
 <div class="container mx-auto">
-	<div class="flex flex-row justify-end px-10">
-		<div>
-			<a href="{{ route('brand.create') }}" class="">
+	<div class="flex flex-row justify-around px-10">
+		<div class="btn-primary mx-10">
+			總成本 {{ $total }} 元
+		</div>
+		<div class="mx-10">
+			<a href="{{ route('brand.create') }}">
 				<button type="submit" class="btn-primary"> + Create</button>
 			</a>
 		</div>
@@ -23,9 +26,9 @@
 			<tbody class="bg-white dark:bg-slate-800">
 				@foreach ($brands as $brand)
 					<tr>
-						<td class="td">{{ $brand->id }}</td>
-						<td class="td">
-							<a href="{{ route('brand.show', ['brand' => $brand->id]) }}">{{ $brand->name }}</a>
+						<td class="td cursor-pointer" onclick="location.href='{{route('brand.show', ['brand' => $brand->id])}}'">{{ $brand->id }}</td>
+						<td class="td cursor-pointer" onclick="location.href='{{route('brand.show', ['brand' => $brand->id])}}'">
+							{{ $brand->name }}
 						</td>
 						<td class="td flex flex-row">
 							<a href="{{ route('brand.edit', ['brand' => $brand->id]) }}">
