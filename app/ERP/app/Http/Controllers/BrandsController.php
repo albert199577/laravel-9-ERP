@@ -14,8 +14,22 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
-        return view('brands.index', ['brands' => $brands]);
+        // $brands = Brand::with(['product_model' => function ($query) {
+        //     $query->withSum('product_model', 'cost');
+        // }])->get();
+
+        $brands = Brand::with('product.product_model')->get();
+
+        $total = 0;
+        foreach ($brands as $products) {
+            foreach ($products->product as $models) {
+                foreach ($models->product_model as $model) {
+                    $total += $model->cost * $model->stock;
+                }
+            }
+        }
+
+        return view('brands.index', ['brands' => $brands, 'total' => $total]);
     }
 
     /**
@@ -54,10 +68,12 @@ class BrandsController extends Controller
      */
     public function show($brand)
     {
-        $brand = Brand::with(['product.product_model', 'product.type'])->findOrFail($brand);
-        
+        $brand = Brand::with(['product' => function ($query) {
+            $query->withSum('product_model', 'stock');
+        }, 'product.type', 'product.product_model'])->findOrFail($brand);
+
         $products = $brand->product;
-        
+
         return view('brands.show', ['brands' => $brand, 'products' => $products]);
     }
 

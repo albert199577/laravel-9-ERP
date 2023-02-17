@@ -46,16 +46,16 @@
 					@else
 						<tr>
 							{{-- <td class="td">{{ $product->id }}</td> --}}
-							<td class="td"></td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->name }}</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->type->name }}</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->name }}</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->product_model[0]->stock }}</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->product_model[0]->cargo_id }}</td>
-							<td class="td" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);"></td>
+							<td class="td cursor-pointer"></td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->name }}</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->type->name }}</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->product_model_sum_stock }}</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);"></td>
 						</tr>
 						@foreach ($product->product_model as $model)
 						<tr>
