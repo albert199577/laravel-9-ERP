@@ -38,7 +38,7 @@
 							<td class="td">{{ $product->product_model[0]->cargo_id }}</td>
 							<td class="td">
 								{{-- <a href="{{ route('prodcut_model.edit', ['id' => $product->product_model[0]->id]) }}"> --}}
-								<a href="">
+								<a href="{{ route('product-model.edit', ['product_model' => $product->product_model[0]->id]) }}">
 									<button class="btn-primary" type="button">編輯</button>
 								</a>
 							</td>
@@ -69,7 +69,7 @@
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->price }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->cargo_id }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">
-								<a href="">
+								<a href="{{ route('product-model.edit', ['product_model' => $model->id]) }}">
 									<button class="btn-primary" type="button">編輯</button>
 								</a>
 							</td>

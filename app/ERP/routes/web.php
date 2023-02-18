@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductsModelController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::resource('product-model', ProductsModelController::class);
 
 Route::resource('brand', BrandsController::class);
 
