@@ -74,7 +74,16 @@ class BrandsController extends Controller
 
         $products = $brand->product;
 
-        return view('brands.show', ['brands' => $brand, 'products' => $products]);
+        $total = 0;
+        
+        foreach ($brand->product as $product) {
+            foreach ($product->product_model as $model) {
+                $total += $model->cost * $model->stock;
+            }
+        }
+        
+
+        return view('brands.show', ['brands' => $brand, 'products' => $products, 'total' => $total]);
     }
 
     /**

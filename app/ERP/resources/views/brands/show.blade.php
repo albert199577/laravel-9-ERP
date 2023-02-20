@@ -6,7 +6,17 @@
 <div class="container mx-auto">
 	<h2 class="text-center">{{ $brands->name }}</h2>
 	<div class="shadow-sm overflow-y-auto my-8">
-		<table class="table-auto border-collapse w-full text-sm">
+		<div class="flex flex-row justify-between px-10 py-3">
+			<div class="mx-10">
+				<a href="{{ route('brand.create') }}">
+					<button type="submit" class="btn-primary"> + Create</button>
+				</a>
+			</div>
+			<div class="btn-primary mx-10">
+				總成本 {{ $total }} 元
+			</div>
+		</div>
+		<table class="table-fixed border-collapse w-full text-sm">
 			<thead>
 				<tr>
 					{{-- <th class="th">No.</th> --}}
