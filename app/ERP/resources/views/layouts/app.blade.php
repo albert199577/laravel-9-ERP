@@ -8,37 +8,44 @@
     @vite('resources/css/app.css')
 </head>
 <body>
-    <nav class="flex flex-row justify-between p-4 mb-5 shadow">
-        <div class="text-blue-700 text-lg font-mono">
-            <a href="{{ route('brand.index') }}">
-                chaomimimi
-            </a>
-        </div>
-        <ul class="grid grid-cols-3 gap-4 text-green-700">
-            <li>
+    <div class="flex flex-col h-screen">
+        <nav class="flex flex-row justify-between p-4"  style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset;">
+            <div class="text-blue-700 text-lg font-mono">
                 <a href="{{ route('brand.index') }}">
-                    Home
+                    Simon
                 </a>
-            </li>
-            <li>
-                <a href="{{ route('brand.index') }}">
-                    Brands List
-                </a>
-            </li>
-            <li>
-                <a href="{{ route('product.index') }}">
-                    Product List
-                </a>
-            </li>
-        </ul>
-    </nav>
-    <div class="container mx-auto">
-        @if (session('status'))
-            <div class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 mb-3" role="alert"">
-                {{ session('status') }}
             </div>
-        @endif
+        </nav>
+        <div class="flex flex-row grow">
+            <ul class="w-full sm:w-3/12 md:w-3/12 lg:w-2/12 " style="background-color: rgb(251, 251, 250); box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset; color: rgba(25, 23, 17, 0.6);">
+                <li>
+                    <a href="{{ route('brand.index') }}">
+                        Home
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('brand.index') }}">
+                        Brands List
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ route('product.index') }}">
+                        Product List
+                    </a>
+                </li>
+            </ul>
+            <div class="w-full sm:w-9/12 md:w-9/12 lg:w-10/12 ">
+                <div class="">
+                    @if (session('status'))
+                        <div class="bg-green-100 rounded-lg py-5 px-6 text-base text-green-700 mb-3" role="alert"">
+                            {{ session('status') }}
+                        </div>
+                    @endif
+                </div>
+                @yield('content')
+            </div>
+            
+        </div>
     </div>
-    @yield('content')
 </body>
 </html>

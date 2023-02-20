@@ -4,14 +4,14 @@
 
 @section('content')
 <div class="container mx-auto">
-	<div class="flex flex-row justify-around px-10">
-		<div class="btn-primary mx-10">
-			總成本 {{ $total }} 元
-		</div>
+	<div class="flex flex-row justify-between px-10">
 		<div class="mx-10">
 			<a href="{{ route('brand.create') }}">
 				<button type="submit" class="btn-primary"> + Create</button>
 			</a>
+		</div>
+		<div class="btn-primary mx-10">
+			總成本 {{ $total }} 元
 		</div>
 	</div>
 	<div class="shadow-sm overflow-y-auto my-8">
@@ -32,12 +32,12 @@
 						</td>
 						<td class="td flex flex-row">
 							<a href="{{ route('brand.edit', ['brand' => $brand->id]) }}">
-								<button type="submit" class="btn-primary">Edit</button>
+								<button type="submit" class="btn-primary mx-1.5">Edit</button>
 							</a>
 							<form action="{{ route('brand.destroy', ['brand' => $brand->id]) }}" method="POST">
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn-primary">Delete</button>
+								<button type="submit" class="btn-primary mx-1.5">Delete</button>
 							</form>
 						</td>
 					</tr>
