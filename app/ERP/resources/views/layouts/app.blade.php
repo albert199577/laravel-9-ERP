@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="flex flex-col h-screen">
-        <nav class="flex flex-row justify-between p-4"  style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset;">
+        <nav class="flex flex-row justify-between p-4 border-b border-slate-900/10"  style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset;">
             <div class="text-blue-700 text-lg font-mono">
                 <a href="{{ route('brand.index') }}">
                     Simon
@@ -17,7 +17,7 @@
             </div>
         </nav>
         <div class="flex flex-row grow">
-            <ul class="w-full sm:w-3/12 md:w-3/12 lg:w-2/12 " style="background-color: rgb(251, 251, 250); box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset; color: rgba(25, 23, 17, 0.6);">
+            <ul class="sm:w-3/12 md:w-2/12 lg:w-2/12 bg-stone-50" style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset; color: rgba(25, 23, 17, 0.6);">
                 <li>
                     <a href="{{ route('brand.index') }}">
                         Home
@@ -34,7 +34,7 @@
                     </a>
                 </li>
             </ul>
-            <div class="w-full sm:w-9/12 md:w-9/12 lg:w-10/12 ">
+            <div class="sm:w-9/12 md:w-10/12 lg:w-10/12 grow">
                 <div class="">
                     @if (session('status'))
                         <div class="bg-green-100 rounded-lg py-5 px-6 text-base text-green-700 mb-3" role="alert"">

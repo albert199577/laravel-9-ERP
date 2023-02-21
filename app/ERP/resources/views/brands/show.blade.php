@@ -8,7 +8,7 @@
 	<div class="shadow-sm overflow-y-auto my-8">
 		<div class="flex flex-row justify-between px-10 py-3">
 			<div class="mx-10">
-				<a href="{{ route('brand.create') }}">
+				<a href="{{ route('product-model.create') }}">
 					<button type="submit" class="btn-primary"> + Create</button>
 				</a>
 			</div>
