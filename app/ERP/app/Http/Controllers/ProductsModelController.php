@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
+use App\Models\Product;
 use App\Models\Product_model;
 use App\Models\Type;
 use Illuminate\Http\Request;
@@ -26,7 +27,10 @@ class ProductsModelController extends Controller
      */
     public function create()
     {
-        //
+        $brands = Brand::all();
+        $types = Type::all();
+
+        return view('product_model.create', ['brands' => $brands, 'types' => $types]);
     }
 
     /**
@@ -37,7 +41,31 @@ class ProductsModelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $product = Product::create([
+            'name' => $request->input('product-name'),
+            'type_id' => $request->input('type-id'),
+            'brand_id' => $request->input('brand-id'),
+            'content' => 'test',
+            'is_default' => $request->input('model-name')[0] ? false : true,
+        ]);
+
+        $models = $request->input('model-name');
+
+        foreach ($models as $key => $value) {
+            $product_model = Product_model::create([
+                'name' => $request->input('model-name')[$key],
+                'color' => $request->input('model-color')[$key],
+                'cost' => $request->input('model-cost')[$key],
+                'price' => $request->input('model-price')[$key],
+                'stock' => $request->input('model-stock')[$key],
+                'cargo_id' => $request->input('model-cargo_id')[$key],
+                'product_id' => $product->id,
+            ]);
+        }
+        
+        session()->flash('status', '商品已建立');
+
+        return redirect()->route('brand.show', ['brand' => $product->brand_id]);
     }
 
     /**

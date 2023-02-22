@@ -16,8 +16,8 @@ return new class extends Migration
         Schema::create('product_models', function (Blueprint $table) {
             $table->id();
 
-            $table->string('name');
-            $table->string('color');
+            $table->string('name')->nullable();
+            $table->string('color')->nullable();
             $table->unsignedBigInteger('cost');
             $table->unsignedBigInteger('price');
             $table->unsignedBigInteger('stock');

@@ -31,52 +31,80 @@
 					</select>
 				</div>
 			</div>
-			<div class="text-xl font-semibold text-zinc-500 pb-5">銷售資訊</div>
-			<div class="detail grid grid-cols-1 md:grid-cols-2 gap-4">
-				<div>
+			<div class="flex flex-row justify-between">
+				<div class="text-xl font-semibold text-zinc-500 pb-5">銷售資訊</div>
+				<div class="mx-10">
+					<button type="button" class="btn-primary create_model"> + 開啟商品規格 </button>
+				</div>
+			</div>
+			<div class="detail grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+				<div class="hidden md:col-span-2">
 					<label class="label" for="model-name">規格</label>
 					<input class="input" type="text" id="model-name" name="model-name[]">
 				</div>
-				<div>
+				<div class="hidden md:col-span-2">
 					<label class="label" for="model-color">顏色</label>
 					<input class="input" type="text" id="model-color" name="model-color[]">
 				</div>
 				<div>
 					<label class="label" for="model-cost">成本</label>
-					<input class="input" type="text" id="model-cost" name="model-cost">
+					<input class="input" type="text" id="model-cost" name="model-cost[]">
 				</div>
 				<div>
 					<label class="label" for="model-price">售價</label>
-					<input class="input" type="text" id="model-price" name="model-price">
+					<input class="input" type="text" id="model-price" name="model-price[]">
 				</div>
 				<div>
 					<label class="label" for="model-stock">商品庫存</label>
-					<input class="input" type="text" id="model-stock" name="model-stock">
+					<input class="input" type="text" id="model-stock" name="model-stock[]">
 				</div>
 				<div>
 					<label class="label" for="model-cargo_id">商品選項貨號</label>
-					<input class="input" type="text" id="model-cargo_id" name="model-cargo_id">
+					<input class="input" type="text" id="model-cargo_id" name="model-cargo_id[]">
 				</div>
 			</div>
-			<div class="flex justify-center">
+			<div class="flex justify-center add_btn">
 				<button class="btn-primary m-10">新增</button>
 			</div>
 		</form>
 	</div>
 </div>
 <script defer>
-	let add_option = document.querySelector("button.add-option");
-    let option_form = document.getElementsByClassName("input-group my-2")[1];
-    let all_option = document.getElementsByClassName("input-group my-2");
-    console.log(all_option);
-    add_option.addEventListener("click", e => {
-        let form = add_option.parentNode;
-        let new_form = option_form.cloneNode(true);
-        let input = new_form.childNodes[3];
-        input.value = "";
-        if (all_option.length < 7) {
-            form.insertBefore(new_form, add_option);
-        }
-    })
+	function add_model (count) {
+		let add_btn = document.querySelector("button.create_model");
+		let t = 0;
+
+		add_btn.addEventListener("click", e => {
+			if (t < 1) {
+				let model = document.querySelectorAll(".hidden");
+				model.forEach(e => {
+					e.classList.remove("hidden");
+				});
+				t++;
+			} else if (t < count) {
+				let form = document.querySelector("form"); 
+				let detail_form = document.querySelectorAll(".detail")[0];
+				let new_form = detail_form.cloneNode(true);
+				let add_option = document.querySelector(".add_btn");
+				
+				let inputs = new_form.querySelectorAll("input");
+				inputs.forEach(input => input.value = "");
+
+				form.insertBefore(new_form, add_option);
+				t++;
+			}
+		})
+	}
+	add_model(3)
 </script>
 @endsection
+
+{{-- add_option.addEventListener("click", e => {
+	let form = add_option.parentNode;
+	let new_form = option_form.cloneNode(true);
+	let input = new_form.childNodes[3];
+	input.value = "";
+	if (all_option.length < 7) {
+		form.insertBefore(new_form, add_option);
+	}
+}) --}}
