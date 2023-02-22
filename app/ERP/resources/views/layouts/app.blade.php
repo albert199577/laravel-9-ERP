@@ -17,7 +17,7 @@
             </div>
         </nav>
         <div class="flex flex-row grow">
-            <ul class="sm:w-3/12 md:w-2/12 lg:w-2/12 bg-stone-50" style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset; color: rgba(25, 23, 17, 0.6);">
+            <ul class="sm:w-3/12 md:w-2/12 lg:w-2/12 bg-stone-50 text-center" style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset; color: rgba(25, 23, 17, 0.6);">
                 <li>
                     <a href="{{ route('brand.index') }}">
                         Home
@@ -25,12 +25,12 @@
                 </li>
                 <li>
                     <a href="{{ route('brand.index') }}">
-                        Brands List
+                        品牌列表
                     </a>
                 </li>
                 <li>
                     <a href="{{ route('product.index') }}">
-                        Product List
+                        商品列表
                     </a>
                 </li>
             </ul>
@@ -44,7 +44,6 @@
                 </div>
                 @yield('content')
             </div>
-            
         </div>
     </div>
 </body>

@@ -4,6 +4,7 @@
 
 @section('content')
 <div class="container mx-auto">
+	<h2 class="text-2xl font-semibold text-center text-zinc-500 p-3">品牌列表</h2>
 	<div class="flex flex-row justify-between px-10">
 		<div class="mx-10">
 			<a href="{{ route('brand.create') }}">
@@ -15,12 +16,12 @@
 		</div>
 	</div>
 	<div class="shadow-sm overflow-y-auto my-8">
-		<table class="table-auto border-collapse w-full text-sm">
+		<table class="table-fixed border-collapse w-3/4 text-sm mx-auto">
 			<thead>
 				<tr>
 					<th class="th">No.</th>
 					<th class="th">品牌名</th>
-					<th class="th">編輯 / 刪除</th>
+					<th class="th"></th>
 				</tr>
 			</thead>
 			<tbody class="bg-white dark:bg-slate-800">
@@ -32,12 +33,12 @@
 						</td>
 						<td class="td flex flex-row">
 							<a href="{{ route('brand.edit', ['brand' => $brand->id]) }}">
-								<button type="submit" class="btn-primary mx-1.5">Edit</button>
+								<button type="submit" class="btn-primary mx-1.5">編輯</button>
 							</a>
 							<form action="{{ route('brand.destroy', ['brand' => $brand->id]) }}" method="POST">
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn-primary mx-1.5">Delete</button>
+								<button type="submit" class="btn-primary mx-1.5">刪除</button>
 							</form>
 						</td>
 					</tr>
