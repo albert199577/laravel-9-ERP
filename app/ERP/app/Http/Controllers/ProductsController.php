@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Products;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class ProductsController extends Controller
@@ -14,7 +14,16 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with(['brand', 'type', 'product_model'])->get();
+
+        $total = 0;
+        foreach ($products as $product) {
+            foreach ($product->product_model as $model) {
+                $total += $model->cost * $model->stock;
+            }
+        }
+
+        return view('products.index', ['products' => $products, 'total' => $total]);
     }
 
     /**
@@ -44,7 +53,7 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function show(Products $products)
+    public function show(Product $products)
     {
         //
     }
@@ -55,7 +64,7 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function edit(Products $products)
+    public function edit(Product $products)
     {
         //
     }
@@ -67,7 +76,7 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Products $products)
+    public function update(Request $request, Product $products)
     {
         //
     }
@@ -78,7 +87,7 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Products $products)
+    public function destroy(Product $products)
     {
         //
     }

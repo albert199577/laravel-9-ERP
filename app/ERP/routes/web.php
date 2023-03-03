@@ -16,6 +16,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+
+Route::resource('product', ProductsController::class);
+
 Route::resource('product-model', ProductsModelController::class);
 
 Route::resource('brand', BrandsController::class);

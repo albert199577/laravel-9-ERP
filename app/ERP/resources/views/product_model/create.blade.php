@@ -21,6 +21,9 @@
 							<option value="{{ $brand->id }}">{{ $brand->name }}</option>
 						@endforeach
 					</select>
+					<small id="add_brand_btn" class="absolute w-full text-gray-500 dark:text-gray-300">
+						找不到你要的品牌嗎？<button type="button" class="underline underline-offset-2 hover:text-sky-400">按此新增品牌</button>
+					</small>
 				</div>
 				<div>
 					<label class="label" for="type-name">商品類別</label>
@@ -29,15 +32,18 @@
 							<option value="{{ $type->id }}">{{ $type->name }}</option>
 						@endforeach
 					</select>
+					<small id="add_type_btn" class="absolute w-full text-gray-500 dark:text-gray-300">
+						找不到你要的類別嗎？<button type="button" class="underline underline-offset-2 hover:text-sky-400">按此新增類別</button>
+					</small>
 				</div>
 			</div>
 			<div class="flex flex-row justify-between">
 				<div class="text-xl font-semibold text-zinc-500 pb-5">銷售資訊</div>
 				<div class="mx-10">
-					<button type="button" class="btn-primary create_model"> + 開啟商品規格 </button>
+					<button type="button" class="btn-primary create_model">開啟商品規格</button>
 				</div>
 			</div>
-			<div class="detail grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+			<div class="detail grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 m-4">
 				<div class="hidden md:col-span-2">
 					<label class="label" for="model-name">規格</label>
 					<input class="input" type="text" id="model-name" name="model-name[]">
@@ -68,6 +74,18 @@
 			</div>
 		</form>
 	</div>
+	<div id="myModal" class="modal hidden">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+				@include('brands.components.form')
+				<div class="flex flex-row justify-center">
+					<div>
+						<button type="submit" class="add_brand_btn btn-primary mx-1.5">新增</button>
+						<button type="button" class="cancle btn-primary mx-1.5">取消</button>
+					</div>
+				</div>
+		</div>
+	</div>
 </div>
 <script defer>
 	function add_model (count) {
@@ -90,21 +108,91 @@
 				let inputs = new_form.querySelectorAll("input");
 				inputs.forEach(input => input.value = "");
 
+				// let delete_btn = document.createElement("span");
+				// delete_btn.innerText = "X";
+				// delete_btn.style.position = "relative";
+				// delete_btn.style.float = "right";
+				// delete_btn.classList.add("delete_btn");
+
+				// new_form.insertBefore(delete_btn, new_form.firstElementChild);
+
+				// delete_btn.addEventListener("click", e => {
+				// 	let target = e.target.closest(".detail");
+				// 	target.parentNode.removeChild(target);
+				// 	t--;
+				// });
+
+				let hr = document.createElement("hr");
+
+				form.insertBefore(hr, add_option);
+
 				form.insertBefore(new_form, add_option);
 				t++;
 			}
 		})
 	}
-	add_model(3)
+	add_model(10)
+
+
+	
+	//clear brand default value
+	let brand_input = document.querySelector("input[name=name]");
+	brand_input.value = "";
+
+
+	function addBrand() {
+		let data = {
+			name: brand_input.value,
+		}
+
+		var requestOptions = {
+			method: 'POST',
+			body: JSON.stringify(data),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		};
+
+		let url = "/api/v1/brand";
+
+		console.log(requestOptions)
+
+		fetch(url, requestOptions)
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log('error', error));
+		
+	}
+	
+	let add_brand_btn = document.querySelector(".add_brand_btn");
+
+	add_brand_btn.addEventListener('click', addBrand);
+
+	// Get the modal
+	let modal = document.querySelector("#myModal");
+
+	// Get the button that opens the modal
+	let btn = document.querySelector("#add_brand_btn");
+
+	// Get the <span> element that closes the modal
+	let span = document.querySelector(".close");
+	
+	let cancle = document.querySelector(".cancle");
+	// When the user clicks on the button, open the modal
+
+	let key = [btn, span, cancle];
+
+	key.forEach(ele => {
+		ele.onclick = () => {
+			modal.classList.toggle('hidden');
+		}
+	});
+
+	// When the user clicks anywhere outside of the modal, close it
+	window.onclick = function(event) {
+		if (event.target == modal) {
+			modal.classList.toggle('hidden');
+		}
+	}
 </script>
 @endsection
-
-{{-- add_option.addEventListener("click", e => {
-	let form = add_option.parentNode;
-	let new_form = option_form.cloneNode(true);
-	let input = new_form.childNodes[3];
-	input.value = "";
-	if (all_option.length < 7) {
-		form.insertBefore(new_form, add_option);
-	}
-}) --}}
