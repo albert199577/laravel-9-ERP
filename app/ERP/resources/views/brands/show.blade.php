@@ -8,7 +8,7 @@
 	<div class="shadow-sm overflow-y-auto">
 		<div class="flex flex-row justify-between px-10 py-3">
 			<div class="mx-10">
-				<a href="{{ route('product-model.create') }}">
+				<a href="{{ route('product-model.create', ['brand_id' => $brands->id]) }}">
 					<button type="submit" class="btn-primary">新增品牌商品</button>
 				</a>
 			</div>
@@ -39,7 +39,7 @@
 							<tr>
 								{{-- <td class="td">{{ $product->id }}</td> --}}
 								<td class="td">√</td>
-								<td class="td">{{ $product->product_model[0]->name }}</td>
+								<td class="td">{{ $product->name }}</td>
 								<td class="td">{{ $product->type->name }}</td>
 								<td class="td">{{ $product->name }}</td>
 								<td class="td">{{ $product->product_model[0]->color }}</td>

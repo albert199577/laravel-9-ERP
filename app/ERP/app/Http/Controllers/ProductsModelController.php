@@ -25,12 +25,14 @@ class ProductsModelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $brands = Brand::all();
         $types = Type::all();
 
-        return view('product_model.create', ['brands' => $brands, 'types' => $types]);
+        $brand_id = $request->input('brand_id');
+
+        return view('product_model.create', ['brands' => $brands, 'types' => $types, 'brand_id' => $brand_id]);
     }
 
     /**

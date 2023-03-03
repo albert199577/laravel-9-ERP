@@ -38,7 +38,7 @@
 						<tr>
 							{{-- <td class="td">{{ $product->id }}</td> --}}
 							<td class="td">√</td>
-							<td class="td">{{ $product->product_model[0]->name }}</td>
+							<td class="td">{{ $product->name }}</td>
 							<td class="td">{{ $product->type->name }}</td>
 							<td class="td">{{ $product->name }}</td>
 							<td class="td">{{ $product->product_model[0]->color }}</td>

@@ -18,11 +18,11 @@
 					<label class="label" for="brand-name">商品品牌</label>
 					<select class="input" name="brand-id" id="brand-name">
 						@foreach ($brands as $brand)
-							<option value="{{ $brand->id }}">{{ $brand->name }}</option>
+							<option value="{{ $brand->id }}"  @if ($brand->id == $brand_id) @selected(true) @endif>{{ $brand->name }}</option>
 						@endforeach
 					</select>
 					<small id="add_brand_btn" class="absolute w-full text-gray-500 dark:text-gray-300">
-						找不到你要的品牌嗎？<button type="button" class="underline underline-offset-2 hover:text-sky-400">按此新增品牌</button>
+						找不到你要的品牌嗎？<button onclick="javascript:createModal('brand');" type="button" class="underline underline-offset-2 hover:text-sky-400">按此新增品牌</button>
 					</small>
 				</div>
 				<div>
@@ -33,7 +33,7 @@
 						@endforeach
 					</select>
 					<small id="add_type_btn" class="absolute w-full text-gray-500 dark:text-gray-300">
-						找不到你要的類別嗎？<button type="button" class="underline underline-offset-2 hover:text-sky-400">按此新增類別</button>
+						找不到你要的類別嗎？<button onclick="javascript:createModal('type');" type="button" class="underline underline-offset-2 hover:text-sky-400">按此新增類別</button>
 					</small>
 				</div>
 			</div>
@@ -74,20 +74,76 @@
 			</div>
 		</form>
 	</div>
-	<div id="myModal" class="modal hidden">
-		<div class="modal-content">
-			<span class="close">&times;</span>
-				@include('brands.components.form')
-				<div class="flex flex-row justify-center">
-					<div>
-						<button type="submit" class="add_brand_btn btn-primary mx-1.5">新增</button>
-						<button type="button" class="cancle btn-primary mx-1.5">取消</button>
-					</div>
-				</div>
-		</div>
-	</div>
 </div>
 <script defer>
+	function createModal(type) {
+		switch (type) {
+			case 'brand':
+				title = "品牌名稱";
+				break;
+			case 'type':
+				title = "類別名稱";
+				break;
+		}
+		let container = document.querySelector('.container');
+		let modal = document.createElement('div');
+
+		modal.innerHTML = `
+			<div id="myModal" class="modal">
+				<div class="modal-content">
+					<span class="close">&times;</span>
+						<div>
+							<div class="col-span-2">
+								<label for="name" class="label">${title}</label>
+								<input type="text" class="input w-3/4" name="name" id="name"/>
+								</div>
+							</div>
+						</div>
+						<div class="flex flex-row justify-center">
+							<div>
+								<button type="submit" class="add_btn btn-primary mx-1.5" onclick="javascript:addData('${type}');">新增</button>
+								<button type="button" class="cancle btn-primary mx-1.5">取消</button>
+							</div>
+						</div>
+				</div>
+			</div>`;
+
+		container.append(modal);
+		listenAdd(modal);
+	}
+
+	function getAllData(type) {
+		let url;
+		let select;
+		let requestOptions = {
+			method: 'GET',
+		};
+
+		switch (type) {
+			case 'brand':
+				url = "/api/v1/brand";
+				select = document.querySelector('select[name=brand-id]');
+				break;
+			case 'type':
+				url = "/api/v1/type";
+				select = document.querySelector('select[name=type-id]');
+				break;
+		}
+		select.innerHTML = '';
+
+		fetch(url, requestOptions)
+			.then(response => response.json())
+			.then(function (data) {
+				data.forEach(e => {
+					let option = document.createElement("option");
+					option.value = e.id;
+					option.text = e.name;
+					select.append(option);
+				});
+			})
+			.catch(error => console.log('error', error));
+	}
+
 	function add_model (count) {
 		let add_btn = document.querySelector("button.create_model");
 		let t = 0;
@@ -133,19 +189,14 @@
 	}
 	add_model(10)
 
-
-	
-	//clear brand default value
-	let brand_input = document.querySelector("input[name=name]");
-	brand_input.value = "";
-
-
-	function addBrand() {
+	function addData(type) {
+		let url;
+		let data_input = document.querySelector("input[name=name]");
 		let data = {
-			name: brand_input.value,
+			name: data_input.value,
 		}
 
-		var requestOptions = {
+		let requestOptions = {
 			method: 'POST',
 			body: JSON.stringify(data),
 			headers: {
@@ -153,45 +204,43 @@
 			}
 		};
 
-		let url = "/api/v1/brand";
-
-		console.log(requestOptions)
+		switch (type) {
+			case 'brand':
+				url = "/api/v1/brand";
+				break;
+			case 'type':
+				url = "/api/v1/type";
+				break;
+		}
 
 		fetch(url, requestOptions)
-			.then(response => response.text())
-			.then(result => console.log(result))
+			.then(response => response.json())
+			.then(function (data) {
+				console.log(data)
+				let modal = document.querySelector("#myModal");
+				modal.remove();
+				getAllData(type);
+			})
 			.catch(error => console.log('error', error));
 		
 	}
 	
-	let add_brand_btn = document.querySelector(".add_brand_btn");
+	function listenAdd(ele) {
+		let span = document.querySelector(".close");
+		let cancle = document.querySelector(".cancle");
 
-	add_brand_btn.addEventListener('click', addBrand);
-
-	// Get the modal
-	let modal = document.querySelector("#myModal");
-
-	// Get the button that opens the modal
-	let btn = document.querySelector("#add_brand_btn");
-
-	// Get the <span> element that closes the modal
-	let span = document.querySelector(".close");
-	
-	let cancle = document.querySelector(".cancle");
-	// When the user clicks on the button, open the modal
-
-	let key = [btn, span, cancle];
-
-	key.forEach(ele => {
-		ele.onclick = () => {
-			modal.classList.toggle('hidden');
+		span.onclick = function () {
+			ele.remove()
 		}
-	});
 
-	// When the user clicks anywhere outside of the modal, close it
-	window.onclick = function(event) {
-		if (event.target == modal) {
-			modal.classList.toggle('hidden');
+		cancle.onclick = function () {
+			ele.remove()
+		}
+		
+		window.onclick = function(event) {
+			if (event.target == ele) {
+				ele.remove();
+			}
 		}
 	}
 </script>
