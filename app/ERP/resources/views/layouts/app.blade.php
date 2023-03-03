@@ -18,17 +18,17 @@
         </nav>
         <div class="flex flex-row grow">
             <ul class="sm:w-3/12 md:w-2/12 lg:w-2/12 bg-stone-50 text-center" style="box-shadow: rgba(0, 0, 0, 0.024) -1px 0px 0px 0px inset; color: rgba(25, 23, 17, 0.6);">
-                <li>
+                <li class="m-2">
                     <a href="{{ route('brand.index') }}">
                         Home
                     </a>
                 </li>
-                <li>
+                <li class="m-2">
                     <a href="{{ route('brand.index') }}">
                         品牌列表
                     </a>
                 </li>
-                <li>
+                <li class="m-2">
                     <a href="{{ route('product.index') }}">
                         商品列表
                     </a>

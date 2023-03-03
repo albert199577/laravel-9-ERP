@@ -9,7 +9,7 @@
 		<div class="flex flex-row justify-between px-10 py-3">
 			<div class="mx-10">
 				<a href="{{ route('product-model.create') }}">
-					<button type="submit" class="btn-primary"> + 新增品牌商品</button>
+					<button type="submit" class="btn-primary">新增品牌商品</button>
 				</a>
 			</div>
 			<div class="btn-primary mx-10">

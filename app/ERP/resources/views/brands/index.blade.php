@@ -8,7 +8,7 @@
 	<div class="flex flex-row justify-between px-10">
 		<div class="mx-10">
 			<a href="{{ route('brand.create') }}">
-				<button type="submit" class="btn-primary"> + Create</button>
+				<button type="submit" class="btn-primary">新增品牌</button>
 			</a>
 		</div>
 		<div class="btn-primary mx-10">

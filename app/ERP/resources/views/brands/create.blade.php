@@ -10,11 +10,11 @@
 			@include('brands.components.form')
 			<div class="flex flex-row justify-center">
 				<div>
-					<button type="submit" class="btn-primary">新增</button>
+					<button type="submit" class="btn-primary mx-1.5">新增</button>
 				</div>
 				<div>
 					<a href="{{ route('brand.index') }}">
-						<button type="button" class="btn-primary">取消</button>
+						<button type="button" class="btn-primary mx-1.5">取消</button>
 					</a>
 				</div>
 			</div>
