@@ -33,6 +33,11 @@
                         商品列表
                     </a>
                 </li>
+                <li class="m-2">
+                    <a href="{{ route('type.index') }}">
+                        類別列表
+                    </a>
+                </li>
             </ul>
             <div class="sm:w-9/12 md:w-10/12 lg:w-10/12 grow">
                 <div class="">

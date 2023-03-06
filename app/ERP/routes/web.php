@@ -3,6 +3,7 @@
 use App\Http\Controllers\BrandsController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\ProductsModelController;
+use App\Http\Controllers\TypesController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,3 +24,4 @@ Route::resource('product-model', ProductsModelController::class);
 
 Route::resource('brand', BrandsController::class);
 
+Route::resource('type', TypesController::class);

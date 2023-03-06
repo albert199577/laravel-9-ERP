@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\type;
 use Illuminate\Http\Request;
 
-class TypeController extends Controller
+class TypesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +14,9 @@ class TypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = Type::all();
+
+        return view('types.index', ['types' => $types]);
     }
 
     /**
@@ -24,7 +26,7 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        return view('types.create');
     }
 
     /**
@@ -35,7 +37,14 @@ class TypeController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|unique:brands|max:20',
+        ]);
+        $type = Type::create($validated);
+
+        session()->flash('status', '類別已建立');
+
+        return redirect()->route('type.index');
     }
 
     /**
@@ -57,7 +66,7 @@ class TypeController extends Controller
      */
     public function edit(type $type)
     {
-        //
+        return view('types.edit', ['type' => $type]);
     }
 
     /**
@@ -69,7 +78,15 @@ class TypeController extends Controller
      */
     public function update(Request $request, type $type)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required|max:20',
+        ]);
+        $type->fill($validated);
+        $type->save();
+
+        session()->flash('status', '類別名稱已更新');
+
+        return redirect()->route('type.index');
     }
 
     /**
@@ -80,6 +97,10 @@ class TypeController extends Controller
      */
     public function destroy(type $type)
     {
-        //
+        $type->delete();
+
+        session()->flash('status', '類別已刪除');
+
+        return redirect()->route('type.index');
     }
 }
