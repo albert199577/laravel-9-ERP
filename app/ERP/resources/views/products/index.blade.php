@@ -39,7 +39,7 @@
 							{{-- <td class="td">{{ $product->id }}</td> --}}
 							<td class="td">√</td>
 							<td class="td">{{ $product->name }}</td>
-							<td class="td">{{ $product->type->name }}</td>
+							<td class="td">{{ $product->type->name ?? '--' }}</td>
 							<td class="td">{{ $product->name }}</td>
 							<td class="td">{{ $product->product_model[0]->color }}</td>
 							<td class="td">{{ $product->product_model[0]->stock }}</td>
@@ -58,7 +58,7 @@
 							{{-- <td class="td">{{ $product->id }}</td> --}}
 							<td class="td cursor-pointer"></td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->name }}</td>
-							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->type->name }}</td>
+							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->type->name ?? '--' }}</td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->product_model_sum_stock }}</td>
@@ -71,7 +71,7 @@
 						<tr>
 							<td class="model hidden {{ 'model_' . $product->id }}"></td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->name }}</td>
-							<td class="model hidden {{ 'model_' . $product->id }}">{{ $product->type->name }}</td>
+							<td class="model hidden {{ 'model_' . $product->id }}">{{ $product->type->name ?? '--' }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->name }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->color }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->stock }}</td>

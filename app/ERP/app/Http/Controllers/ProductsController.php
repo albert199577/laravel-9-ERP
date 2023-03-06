@@ -14,7 +14,7 @@ class ProductsController extends Controller
      */
     public function index()
     {
-        $products = Product::with(['brand', 'type', 'product_model'])->get();
+        $products = Product::with(['brand', 'type'])->withSum('product_model', 'stock')->get();
 
         $total = 0;
         foreach ($products as $product) {
