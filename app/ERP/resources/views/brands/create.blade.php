@@ -7,7 +7,8 @@
 	<div class="shadow-sm overflow-y-auto my-8">
 		<form action="{{ route('brand.store') }}" method="POST">
 			@csrf
-			@include('brands.components.form')
+			<x-form :type="'品牌'">
+			</x-form>
 			<div class="flex flex-row justify-center">
 				<div>
 					<button type="submit" class="btn-primary mx-1.5">新增</button>

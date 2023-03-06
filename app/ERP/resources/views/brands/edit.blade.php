@@ -8,7 +8,8 @@
 		<form action="{{ route('brand.update', ['brand' => $brand->id]) }}" method="POST">
 			@csrf
 			@method('PUT')
-			@include('brands.components.form')
+			<x-form :type="'品牌'" :data="$brand">
+			</x-form>
 			<div class="flex flex-row justify-center">
 				<div>
 					<button type="submit" class="btn-primary">編輯</button>
