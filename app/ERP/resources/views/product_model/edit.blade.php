@@ -10,21 +10,23 @@
 			@method('PUT')
 			<div>
 				<label for="model-name">商品名稱</label>
-				<input class="input" type="text" id="model-name" name="model-name" value="{{ $model->name }}">
+				<input class="input" type="text" id="model-name" name="model-name" value="{{ $model->product->name }}">
 			</div>
 			<div>
 				<label for="brand-name">商品品牌</label>
 				<select class="input" name="brand-id" id="brand-name">
+					<option value="">--</option>
 					@foreach ($brands as $brand)
-						<option value="{{ $brand->id }}" @if ($model->product->brand->id == $brand->id) @selected(true) @endif>{{ $brand->name }}</option>
+						<option value="{{ $brand->id }}" @if ( isset($model->product->brand) && $model->product->brand->id == $brand->id) @selected(true) @endif>{{ $brand->name }}</option>
 					@endforeach
 				</select>
 			</div>
 			<div>
 				<label for="type-name">商品類別</label>
 				<select class="input" name="type-id" id="type-name">
+					<option value="">--</option>
 					@foreach ($types as $type)
-						<option value="{{ $type->id }}" @if ($model->product->type->id == $type->id) @selected(true) @endif>{{ $type->name }}</option>
+						<option value="{{ $type->id }}" @if (isset($model->product->type) && ($model->product->type->id == $type->id)) @selected(true) @endif>{{ $type->name }}</option>
 					@endforeach
 				</select>
 			</div>

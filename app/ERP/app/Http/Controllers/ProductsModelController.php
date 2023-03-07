@@ -67,7 +67,7 @@ class ProductsModelController extends Controller
         
         session()->flash('status', '商品已建立');
 
-        return redirect()->route('brand.show', ['brand' => $product->brand_id]);
+        return redirect()->route('product.index');
     }
 
     /**
@@ -111,14 +111,18 @@ class ProductsModelController extends Controller
         $product_model->price = $request->input('model-price');
         $product_model->stock = $request->input('model-stock');
         $product_model->cargo_id = $request->input('model-cargo_id');
-        $product_model->product->brand_id = $request->input('brand-id');
-        $product_model->product->type_id = $request->input('type-id');
+        if ($request->input('brand-id') != 'null') {
+            $product_model->product->brand_id = $request->input('brand-id');
+        }
+        if ($request->input('type-id') != 'null') {
+            $product_model->product->type_id = $request->input('type-id');
+        }
 
         $product_model->push();
 
         session()->flash('status', '商品資訊已更新');
 
-        return redirect()->route('brand.show', ['brand' => $product_model->product->brand_id]);
+        return redirect()->route('product.index');
     }
 
     /**

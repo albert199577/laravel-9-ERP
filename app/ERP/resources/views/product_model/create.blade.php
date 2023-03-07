@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', '庫存總覽')
+@section('title', '新增商品')
 
 @section('content')
 <div class="container mx-auto">
@@ -17,6 +17,7 @@
 				<div>
 					<label class="label" for="brand-name">商品品牌</label>
 					<select class="input" name="brand-id" id="brand-name">
+						<option value="">--</option>
 						@foreach ($brands as $brand)
 							<option value="{{ $brand->id }}"  @if ($brand->id == $brand_id) @selected(true) @endif>{{ $brand->name }}</option>
 						@endforeach
@@ -28,6 +29,7 @@
 				<div>
 					<label class="label" for="type-name">商品類別</label>
 					<select class="input" name="type-id" id="type-name">
+						<option value="">--</option>
 						@foreach ($types as $type)
 							<option value="{{ $type->id }}">{{ $type->name }}</option>
 						@endforeach
