@@ -133,6 +133,10 @@ class ProductsModelController extends Controller
      */
     public function destroy(Product_model $product_model)
     {
-        //
+        $product_model->delete();
+
+        session()->flash('status', '商品種類已刪除');
+
+        return redirect()->route('product.index');
     }
 }

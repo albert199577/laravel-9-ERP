@@ -12,9 +12,38 @@ class ProductsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::with(['brand', 'type'])->withSum('product_model', 'stock')->get();
+        $key = $request->input('key');
+        $type = $request->input('type');
+
+        switch ($type) {
+            case 'brand':
+                $products = Product::whereHas('brand', function ($query) use ($key) {
+                    $query->where('name', $key);
+                })
+                ->with(['brand', 'type'])->withSum('product_model', 'stock')->get();
+                break;
+            case 'type':
+                $products = Product::whereHas('type', function ($query) use ($key) {
+                    $query->where('name', $key);
+                })
+                ->with(['brand', 'type'])->withSum('product_model', 'stock')->get();
+                break;
+            case 'product_name':
+                $products = Product::where('name', $key)->with(['brand', 'type'])->withSum('product_model', 'stock')->get();
+                break;
+            case 'model':
+                
+                break;
+            case 'cargo_id':
+                $products = Product::whereHas('product_model', function ($query) use ($key) {
+                    $query->where('cargo_id', $key);
+                })->with(['brand', 'type'])->withSum('product_model', 'stock')->get();
+                break;
+        }
+
+        if (empty($key)) $products = Product::with(['brand', 'type', 'product_model'])->withSum('product_model', 'stock')->get();
 
         $total = 0;
         foreach ($products as $product) {
@@ -50,7 +79,7 @@ class ProductsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Products  $products
+     * @param  \App\Models\Products  $product
      * @return \Illuminate\Http\Response
      */
     public function show(Product $products)
@@ -64,7 +93,7 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $products)
+    public function edit(Product $product)
     {
         //
     }
@@ -76,7 +105,7 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Product $products)
+    public function update(Request $request, Product $product)
     {
         //
     }
@@ -87,8 +116,12 @@ class ProductsController extends Controller
      * @param  \App\Models\Products  $products
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Product $products)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+
+        session()->flash('status', '商品已刪除');
+
+        return redirect()->route('product.index');
     }
 }
