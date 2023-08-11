@@ -6,7 +6,7 @@
 <div class="container mx-auto">
 	<form class="search text-xl text-center text-zinc-500 my-3" action="{{ route('product.index') }}" method="GET">
 		<select class="inline-block w-1/5 p-3 rounded-md border" name="type" id="type">
-			<option value="">--</option>
+			<option value="default">--</option>
 			<option value="brand">品牌</option>
 			<option value="type">分類</option>
 			<option value="product_name">商品名稱</option>
@@ -31,7 +31,7 @@
 		<table class="table-fixed border-collapse w-full text-sm">
 			<thead>
 				<tr>
-					{{-- <th class="th">No.</th> --}}
+					<th class="th">No.</th>
 					<th class="th">預設商品</th>
 					<th class="th">商品</th>
 					<th class="th">分類</th>
@@ -49,7 +49,7 @@
 				@foreach ($products as $product)
 					@if ($product->is_default)
 						<tr>
-							{{-- <td class="td">{{ $product->id }}</td> --}}
+							<td class="td">{{ $product->id }}</td>
 							<td class="td">√</td>
 							<td class="td">{{ $product->name }}</td>
 							<td class="td">{{ $product->type->name ?? '--' }}</td>
@@ -60,7 +60,7 @@
 							<td class="td">{{ $product->product_model[0]->cost }}</td>
 							<td class="td">{{ $product->product_model[0]->price }}</td>
 							<td class="td">{{ $product->product_model[0]->cargo_id }}</td>
-							<td class="td flex flex-row">
+							<td class="td flex flex-col">
 								{{-- <a href="{{ route('prodcut_model.edit', ['id' => $product->product_model[0]->id]) }}"> --}}
 								<a href="{{ route('product-model.edit', ['product_model' => $product->product_model[0]->id]) }}">
 									<button class="btn-primary mx-1.5" type="button">編輯</button>
@@ -68,13 +68,13 @@
 								<form action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST">
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn-primary mx-1.5">刪除</button>
+									<button type="submit" class="btn-danger mx-1.5">刪除</button>
 								</form>
 							</td>
 						</tr>
 					@else
 						<tr>
-							{{-- <td class="td">{{ $product->id }}</td> --}}
+							<td class="td">{{ $product->id }}</td>
 							<td class="td cursor-pointer"></td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->name }}</td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">{{ $product->type->name ?? '--' }}</td>
@@ -85,13 +85,18 @@
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
 							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">--</td>
-							<td class="td cursor-pointer" id="{{ 'model_' . $product->id }}" onclick="javascript:openSubmenu(this);">
-								
+							<td class="td" id="{{ 'model_' . $product->id }}">
+								<form action="{{ route('product.destroy', ['product' => $product->id]) }}" method="POST">
+									@csrf
+									@method('DELETE')
+									<button type="submit" class="btn-danger mx-1.5">刪除</button>
+								</form>
 							</td>
 						</tr>
 						@foreach ($product->product_model as $model)
 						<tr>
 							<td class="model hidden {{ 'model_' . $product->id }}"></td>
+							<td class="model hidden {{ 'model_' . $product->id }}">--</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $model->name }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $product->type->name ?? '--' }}</td>
 							<td class="model hidden {{ 'model_' . $product->id }}">{{ $product->brand->name ?? '--' }}</td>
@@ -108,7 +113,7 @@
 								<form action="{{ route('product-model.destroy', ['product_model' => $model->id]) }}" method="POST">
 									@csrf
 									@method('DELETE')
-									<button type="submit" class="btn-primary mx-1.5">刪除</button>
+									<button type="submit" class="btn-danger mx-1.5">刪除</button>
 								</form>
 							</td>
 						</tr>
@@ -120,6 +125,7 @@
 	</div>
 </div>
 <script defer>
+	let defaultInput = document.querySelector("input[type=search]");
 	function openSubmenu(ele) {
 		const models = document.querySelectorAll('.' + ele.id);
 		models.forEach(ele => {
@@ -132,13 +138,13 @@
 	selectElement.addEventListener('change', function() {
 		let type = selectElement.value;
 
-		switch (type) {
-			case "brand":
-				getAllData(type);
-				break;
-			case "type":
-				getAllData(type);
-				break;
+		if (type === 'brand' || type === 'type') {
+			getAllData(type);
+		} else {
+			let select = document.querySelector("[type=search]");
+			if (select === defaultInput) return;
+			let form = document.querySelector(".search");
+			form.replaceChild(defaultInput, select);
 		}
 	});
 
@@ -148,7 +154,7 @@
 			method: 'GET',
 		};
 		let selectElement = document.getElementById("type");
-		let select = document.querySelector("input[type=search]");
+		let select = document.querySelector("[type=search]");
 		let form = document.querySelector(".search");
 
 		switch (type) {
