@@ -21,6 +21,7 @@
 				<tr>
 					<th class="th">No.</th>
 					<th class="th">品牌名</th>
+					<th class="th">品牌成本</th>
 					<th class="th"></th>
 				</tr>
 			</thead>
@@ -31,6 +32,9 @@
 						<td class="td cursor-pointer" onclick="location.href='{{route('brand.show', ['brand' => $brand->id])}}'">
 							{{ $brand->name }}
 						</td>
+						<td class="td cursor-pointer" onclick="location.href='{{route('brand.show', ['brand' => $brand->id])}}'">
+							$ {{ $brand->brand_total }}
+						</td>
 						<td class="td flex flex-row">
 							<a href="{{ route('brand.edit', ['brand' => $brand->id]) }}">
 								<button type="submit" class="btn-primary mx-1.5">編輯</button>
@@ -38,7 +42,7 @@
 							<form action="{{ route('brand.destroy', ['brand' => $brand->id]) }}" method="POST">
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn-primary mx-1.5">刪除</button>
+								<button type="submit" class="btn-danger mx-1.5">刪除</button>
 							</form>
 						</td>
 					</tr>

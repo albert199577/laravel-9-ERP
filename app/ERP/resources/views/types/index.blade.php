@@ -35,7 +35,7 @@
 							<form action="{{ route('type.destroy', ['type' => $type->id]) }}" method="POST">
 								@csrf
 								@method('DELETE')
-								<button type="submit" class="btn-primary mx-1.5">刪除</button>
+								<button type="submit" class="btn-danger mx-1.5">刪除</button>
 							</form>
 						</td>
 					</tr>
