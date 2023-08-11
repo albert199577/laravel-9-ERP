@@ -50,4 +50,8 @@
     .btn-primary {
         @apply bg-indigo-600 hover:bg-indigo-500 text-white font-medium p-2 rounded-md
     }
+
+    .btn-danger {
+        @apply bg-pink-300 hover:bg-pink-200 text-white font-medium p-2 rounded-md
+    }
 }
