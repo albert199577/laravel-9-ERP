@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Brand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class BrandsController extends Controller
 {
@@ -14,21 +15,16 @@ class BrandsController extends Controller
      */
     public function index()
     {
-        // $brands = Brand::with(['product_model' => function ($query) {
-        //     $query->withSum('product_model', 'cost');
-        // }])->get();
-
-        $brands = Brand::with('product.product_model')->get();
+        $brands = DB::table('brands')
+                    ->select('brands.id', 'brands.name', DB::raw('SUM(COALESCE(product_models.price * product_models.stock, 0)) as brand_total'))
+                    ->leftJoin('product_models', 'brands.id', '=', 'product_models.product_id')
+                    ->groupBy('brands.name')
+                    ->get();
 
         $total = 0;
-        foreach ($brands as $products) {
-            foreach ($products->product as $models) {
-                foreach ($models->product_model as $model) {
-                    $total += $model->cost * $model->stock;
-                }
-            }
+        foreach ($brands as $brand) {
+            $total += $brand->brand_total;
         }
-
         return view('brands.index', ['brands' => $brands, 'total' => $total]);
     }
 
